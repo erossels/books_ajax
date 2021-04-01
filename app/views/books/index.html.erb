@@ -1,0 +1,50 @@
+<div class='container'>
+  <h1>Books</h1>
+
+  <div id="show_book" class='container col-8'>
+  </div>
+
+  <div>
+    <h4 class='header'>Reserva directamente un libro</h4>
+      <%= select_tag :id, options_from_collection_for_select(@books.available, :id, :name), prompt: 'Reserve a book..', id: "form-info" %>
+      <button id='btn_form' class='btn btn-primary'> Book it!</button>
+    <div id='reservas'></div>
+  </div>
+
+<%= link_to 'New Book', new_book_path, class: 'btn btn-primary mt-1 mb-4' %>
+
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>User</th>
+        <th colspan="4"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= book.name %></td>
+          <td><%= book.status %></td>
+          <td>
+            <% if !book.user_id.nil? %>
+              <%= User.find(book.user_id) %>
+            <% end  %>
+          </td>
+          <td><%= link_to 'Show', book, remote: true %></td>
+          <td><%= link_to 'Edit', edit_book_path(book) %></td>
+          <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Book it', books_bookit_path(book), class: 'btn btn-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+</div>
+
+
+<%= javascript_include_tag 'bookForm' %>

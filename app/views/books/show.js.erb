@@ -1,0 +1,2 @@
+$("#show_book").empty()
+$("#show_book").append("<%= escape_javascript(render partial: 'books/show', locals: { book: @book } ) %>")
